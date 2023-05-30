@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8" />
+<title>Blogs</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top"
+		aria-label="Fourth navbar example">
+
+		<div class="container">
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
+				aria-controls="navbarsExample04" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarsExample04">
+				<ul class="nav navbar-nav me-auto mb-2 mb-md-0">
+					<li class="nav-item"><a
+						class="nav-link fw-bold text-white active" aria-current="page"
+						href="/">AllPosts</a></li>
+					<li class="nav-item mb-2"><a href="/signup"><button
+								type="button" class="btn btn-outline-light me-2">Sign-up</button></a></li>
+					<li class="nav-item mb-2"><a href="/login"><button
+								type="button" class="btn btn-outline-light">Login</button></a></li>
+				</ul>
+<!-- 				<form class="d-flex" role="search">
+ -->					
+ 						<div class="d-flex">
+ 						<input id="filter" class="form-control form-control-light me-2" type="search"
+						placeholder="Search" aria-label="Search">
+						</div>
+<!-- 					<button class="btn btn-outline-light" type="submit">Search</button>
+				</form> -->
+			</div>
+		</div>
+	</nav>
+	<div id="content" class="container mt-3 mb-3">
+		<div id="data" th:each="post:${posts}" class="card border-secondary mb-3 w-100">
+			<div class="card-header">
+				<h2>
+					<a th:href="@{'blog/' + ${post.postId}}" th:text="${post.title}"></a>
+				</h2>
+				<h5 class="card-title" th:text="${post.description}"></h5>
+			</div>
+			<div class="card-body text-secondary">
+				<p class="card-text" th:inner="text">....madeBy <span class="text-primary">[[${post.user.email}]]</span></p>
+			</div>
+		</div>
+	</div>
+	<footer class="footer mt-auto py-3 bg-light">
+		<div class="container text-center">
+			<span class="mb-3 mb-md-0 text-muted">Copyright © 2023 <a
+				class="text-dark" href="#">SatyaNayak</a>, All rights reserved
+			</span>
+		</div>
+	</footer>
+	<script src="js/bootstrap.bundle.min.js"></script>
+		<script>
+		$(document).ready(function() {
+			$('#filter').on('keyup', function() {
+				var value = $(this).val().toLowerCase();
+				$('#content #data').filter(function(){
+					$(this).toggle($(this).text().toLowerCase().indexOf(value)>-1);
+				});
+			});
+		});
+	</script>
+</body>
+</html>
